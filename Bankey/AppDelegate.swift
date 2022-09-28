@@ -27,12 +27,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         loginViewController.delegate = self
         onboardViewController.delegate = self
         
+        registerForNotifications()
+        
         displayLogin()
         return true
     }
+    
+    private func registerForNotifications(){
+        NotificationCenter.default.addObserver(self, selector: #selector(didLogout), name: .logout, object: nil)
+    }
+    
     private func displayLogin(){
         setRootViewController(loginViewController)
     }
+    
     private func displayNextScreen(){
         if LocalState.hasOnboarded {
             prepMainView()
@@ -41,6 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             setRootViewController(onboardViewController)
         }
     }
+    
     private func prepMainView() {
         mainViewController.setStatusBar()
         UINavigationBar.appearance().isTranslucent = false
@@ -77,7 +86,7 @@ extension AppDelegate: OnboardingContainerViewControllerDelegate {
 }
 
 extension AppDelegate: LogoutDelegate {
-    func didLogout(){
+    @objc func didLogout(){
         setRootViewController(loginViewController)
     }
 }

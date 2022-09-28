@@ -8,13 +8,14 @@
 import Foundation
 import UIKit
 
+enum AccountType: String, Codable {
+    case Banking
+    case CreditCard
+    case Investment
+}
+
+
 class AccountSummaryCell: UITableViewCell {
-    
-    enum AccountType: String {
-        case Banking
-        case CreditCard
-        case Investment
-    }
     
     struct ViewModel {
         let accountType: AccountType
@@ -63,6 +64,7 @@ extension AccountSummaryCell {
 
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.font = UIFont.preferredFont(forTextStyle: .body)
+        nameLabel.adjustsFontSizeToFitWidth = true
         nameLabel.text = "Account Name"
         
         balanceStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -72,12 +74,13 @@ extension AccountSummaryCell {
         balanceLabel.translatesAutoresizingMaskIntoConstraints = false
         balanceLabel.font = UIFont.preferredFont(forTextStyle: .body)
         balanceLabel.textAlignment = .right
+        balanceLabel.adjustsFontSizeToFitWidth = true
         balanceLabel.text = "Some Balance"
         
         balanceAmountLabel.translatesAutoresizingMaskIntoConstraints = false
         balanceAmountLabel.textAlignment = .right
         balanceLabel.attributedText = makeFormattedBalance(dollars: "929,466", cents: "23")
-        //balanceAmountLabel.text = "$929,355"
+        
         
         chevronImageView.translatesAutoresizingMaskIntoConstraints = false
         let chevronImage = UIImage(systemName: "chevron.right")!.withTintColor(appColor,renderingMode: .alwaysOriginal)
